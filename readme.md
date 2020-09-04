@@ -24,4 +24,6 @@ fitur siswa
 -ambil absen
 -melihat laporan
 
+clone: untuk akun admin dan guru disertakan pada Seeder
+
 Credits : https://github.com/84raja fb:https://www.facebook.com/afdiko.myte
