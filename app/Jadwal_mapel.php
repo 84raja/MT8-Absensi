@@ -14,24 +14,27 @@ class Jadwal_mapel extends Model
     protected $table = "jadwal_mapels";
 
     protected $fillable = [
-        'kelas_id','mapel_id','guru_id','hari','jam','tahun_ajar'
+        'kelas_id', 'mapel_id', 'guru_id', 'hari', 'jam', 'tahun_ajar'
     ];
 
-    public function absensi() 
+    /**
+     * many to many jadwal_mapel->absensi
+     */
+    public function absensi()
     {
-        return $this->hasMany('App\Absensi','jadwal_mapel_id', 'id');
+        return $this->hasMany('App\Absensi', 'jadwal_mapel_id', 'id');
     }
 
     public function guru()
-	{
-        return $this->belongsTo('App\Guru','guru_id', 'id');
+    {
+        return $this->belongsTo('App\Guru', 'guru_id', 'id');
     }
     public function kelas()
-	{
-        return $this->belongsTo('App\Kelas','kelas_id', 'id');
+    {
+        return $this->belongsTo('App\Kelas', 'kelas_id', 'id');
     }
     public function mapel()
-	{
-        return $this->belongsTo('App\Mapel','mapel_id', 'id');
+    {
+        return $this->belongsTo('App\Mapel', 'mapel_id', 'id');
     }
 }

@@ -16,7 +16,7 @@
             </td>
             <td><center><h3 style="height: 2px">
                     AN-NUR PADANG
-                </h3> 
+                </h3>
                 <p style="height: 2px">
                     Jln. Adinegoro No.24 A Kel. Batang Kabung Ganting, Kec. Koto Tangah
                 </p>
@@ -27,40 +27,45 @@
             </td>
         </tr>
     </table>
-    
-        <hr>
-        <br>
-        <table>
-            <tr>
-                <td style="width: 4rem"></td>
-                <td style="width: 6rem">Nama</td>
-                <td style="width: 1rem" >:</td>
-                <td style="width: 1rem">{{$siswa->nama}}</td>
-            </tr>
-            <tr>
-                <td style="width: 4rem"></td>
-                <td style="width: 6rem">Kelas</td>
-                <td style="width: 1rem" >:</td>
-                <td style="width: 1rem">{{$jadwal_mapel->kelas->kelas}}</td>
-            </tr>
-            <tr>
-                <td style="width: 4rem"></td>
-                <td style="width: 6rem">Mapel</td>
-                <td style="width: 1rem" >:</td>
-                <td style="width: 1rem">{{$jadwal_mapel->mapel->nama_mapel}}</td>
-            </tr>
-            <tr>
-                <td style="width: 4rem"></td>
-                <td style="width: 6rem">Guru</td>
-                <td style="width: 1rem" >:</td>
-                <td style="width: 1rem">{{$jadwal_mapel->guru->nama}}</td>
-            </tr>
 
-        </table>
-        <br>
-        
+    <hr>
+    <br>
+    <center>Laporan Absensi</center>
+    <table>
+        <tr>
+            <td style="width: 4rem"></td>
+            <td style="width: 7rem">Nama</td>
+            <td style="width: 1rem">:</td>
+            <td style="width: 1rem">{{$siswa->nama}}</td>
+        </tr>
+        <tr>
+            <td style="width: 4rem"></td>
+            <td style="width: 7rem">Mata Pelajaran</td>
+            <td style="width: 1rem">:</td>
+            <td style="width: 1rem">{{$jadwal_mapel->mapel->nama_mapel}}</td>
+        </tr>
+        <tr>
+            <td style="width: 4rem"></td>
+            <td style="width: 6rem">Kelas</td>
+            <td style="width: 1rem">:</td>
+            <td style="width: 1rem">{{$jadwal_mapel->kelas->kelas}}</td>
+        </tr>
+        <tr>
+            <td style="width: 4rem"></td>
+            <td style="width: 6rem">Tahun Ajaran</td>
+            <td style="width: 1rem">:</td>
+            <td style="width: 1rem">{{$jadwal_mapel->tahun_ajar}}</td>
+        </tr>
+        <tr>
+            <td style="width: 4rem"></td>
+            <td style="width: 6rem">Guru</td>
+            <td style="width: 1rem">:</td>
+            <td style="width: 1rem">{{$jadwal_mapel->guru->nama}}</td>
+        </tr>
+    </table>
+    <br>
         <table style="border: 1px solid black;border-collapse: collapse;width: 95%" align="center" cellpadding="4">
-            <thead style="border: 1px solid black"> 
+            <thead style="border: 1px solid black">
                 <tr >
                     <th style="border: 1px solid black" class="text-center">No</th>
                     <th style="border: 1px solid black" class="text-center">Pertemuan Ke</th>
@@ -70,7 +75,7 @@
                     <th style="border: 1px solid black" class="text-center">Sakit</th>
                     <th style="border: 1px solid black" class="text-center">Keterangan</th>
                 </tr>
-            </thead> 
+            </thead>
             <tbody>
                 @php
                     $no = 1;

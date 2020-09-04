@@ -44,7 +44,7 @@
 				<img src="http://placehold.it/50/30a5ff/fff" class="img-responsive" alt="">
 			</div>
 			<div class="profile-usertitle">
-                <div class="profile-usertitle-name">{{auth::guard('admin')->user()->nama}}</div>
+                <div class="profile-usertitle-name">{{Auth::guard('admin')->user()->nama}}</div>
 				<div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>
 			</div>
 			<div class="clear"></div>
@@ -56,7 +56,15 @@
 			<li><a href="{{url('admin/data-guru')}}"><em class="fa fa-users">&nbsp;</em> Data Guru</a></li>
 			<li><a href="{{url('admin/data-siswa')}}"><em class="fa fa-users">&nbsp;</em> Data Siswa</a></li>
 			<li><a href="{{url('admin/data-kelas')}}"><em class="fa fa-file">&nbsp;</em> Data Kelas</a></li>
-			<li><a href="{{url('admin/data-mapel')}}"><em class="fa fa-file">&nbsp;</em> Data Mata Pelajaran</a></li>
+            <li><a href="{{url('admin/data-mapel')}}"><em class="fa fa-file">&nbsp;</em> Data Mata Pelajaran</a></li>
+            <li class="parent "><a data-toggle="collapse" href="#sub-item-1" class="collapsed" aria-expanded="false">
+				<em class="fa fa-navicon">&nbsp;</em> Laporan Anbsensi <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right collapsed" aria-expanded="false"><em class="fa fa-plus"></em></span>
+				</a>
+				<ul class="children collapse" id="sub-item-1" aria-expanded="false" style="height: 0px;">
+                    <li><a href="{{route('admin.laporan')}}">
+                        <em class="fa fa-file">&nbsp;</em> Laporan
+                    </a></li>
+				</ul>
 			<li><a href="{{url('admin/logout')}}"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
 	</div>

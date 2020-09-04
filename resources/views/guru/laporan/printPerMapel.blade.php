@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Absensi {{$absensi->mapel->nama_mapel}}</title>
+    <title>Absensi</title>
 </head>
 <body>
     <table>
@@ -30,37 +30,37 @@
 
         <hr>
         <br>
-        <center>Laporan Absensi Per Pertemuan</center>
+        <center>Rekap Absensi Per Mata Pelajaran</center>
         <table>
             <tr>
                 <td style="width: 4rem"></td>
                 <td style="width: 7rem">Mata Pelajaran</td>
                 <td style="width: 1rem" >:</td>
-                <td style="width: 1rem">{{$absensi->mapel->nama_mapel}}</td>
+                <td style="width: 1rem">{{$jadwal_mapel->mapel->nama_mapel}}</td>
             </tr>
             <tr>
                 <td style="width: 4rem"></td>
                 <td style="width: 6rem">Kelas</td>
                 <td style="width: 1rem" >:</td>
-                <td style="width: 1rem">{{$absensi->kelas->kelas}}</td>
+                <td style="width: 1rem">{{$jadwal_mapel->kelas->kelas}}</td>
             </tr>
             <tr>
                 <td style="width: 4rem"></td>
-                <td style="width: 6rem">Tanggal</td>
+                <td style="width: 6rem">Jumlah Pertemuan</td>
                 <td style="width: 1rem" >:</td>
-                <td style="width: 1rem">{{$absensi->tanggal}}</td>
+                <td style="width: 1rem">{{$jumlah_pertemuan}}</td>
             </tr>
             <tr>
                 <td style="width: 4rem"></td>
-                <td style="width: 6rem">Pertemuan Ke</td>
+                <td style="width: 6rem">Tahun Ajaran</td>
                 <td style="width: 1rem" >:</td>
-                <td style="width: 1rem">{{$absensi->pertemuan}}</td>
+                <td style="width: 1rem">{{$jadwal_mapel->tahun_ajar}}</td>
             </tr>
             <tr>
                 <td style="width: 4rem"></td>
                 <td style="width: 6rem">Guru</td>
                 <td style="width: 1rem" >:</td>
-                <td style="width: 1rem">{{$absensi->guru->nama}}</td>
+                <td style="width: 1rem">{{$jadwal_mapel->guru->nama}}</td>
             </tr>
         </table>
         <br>
@@ -69,46 +69,50 @@
             <thead style="border: 1px solid black">
                 <tr >
                     <th style="border: 1px solid black" class="text-center">No</th>
-                    <th style="border: 1px solid black" class="text-center">Siswa</th>
+                    <th style="border: 1px solid black" class="text-center">Nama Siswa</th>
                     <th style="border: 1px solid black" class="text-center">Hadir</th>
                     <th style="border: 1px solid black" class="text-center">Tidak Hadir</th>
                     <th style="border: 1px solid black" class="text-center">Izin</th>
                     <th style="border: 1px solid black" class="text-center">Sakit</th>
-                    <th style="border: 1px solid black" class="text-center">Keterangan</th>
                 </tr>
             </thead>
             <tbody>
                 @php
                     $no = 1;
                 @endphp
-                @foreach ($kehadiran as $hadir)
+                @foreach ($siswas as $siswa)
                 <tr>
                     <td style="border: 1px solid black">{{$no++}}</td>
-                    <td style="border: 1px solid black">{{$hadir->siswa->nama}}</td>
-                    @if ($hadir->status_kehadiran == 'Hadir')
-                    <td style="border: 1px solid black"><div style="font-family: DejaVu Sans, sans-serif;">✔</div></td>
-                    <td style="border: 1px solid black"></td>
-                    <td style="border: 1px solid black"></td>
-                    <td style="border: 1px solid black"></td>
-                    <td style="border: 1px solid black">{{$hadir->ket}}</td>
-                    @elseif($hadir->status_kehadiran == 'Tidak Hadir')
-                    <td style="border: 1px solid black"></td>
-                    <td style="border: 1px solid black"><div style="font-family: DejaVu Sans, sans-serif;">✔</div></td>
-                    <td style="border: 1px solid black"></td>
-                    <td style="border: 1px solid black"></td>
-                    <td style="border: 1px solid black">{{$hadir->ket}}</td>
-                    @elseif($hadir->status_kehadiran == 'Izin')
-                    <td style="border: 1px solid black"></td>
-                    <td style="border: 1px solid black"></td>
-                    <td style="border: 1px solid black"><div style="font-family: DejaVu Sans, sans-serif;">✔</div></td>
-                    <td style="border: 1px solid black"></td>
-                    <td style="border: 1px solid black">{{$hadir->ket}}</td>
-                    @elseif($hadir->status_kehadiran == 'Sakit')
-                    <td style="border: 1px solid black"></td>
-                    <td style="border: 1px solid black"></td>
-                    <td style="border: 1px solid black"></td>
-                    <td style="border: 1px solid black"><div style="font-family: DejaVu Sans, sans-serif;">✔</div></td>
-                    <td style="border: 1px solid black">{{$hadir->ket}}</td>
+                    <td style="border: 1px solid black">{{$siswa->nama}}</td>
+                    @php
+                        $hadir = App\Absensi_detail::whereJadwalMapelId($jadwal_mapel->id)->whereSiswaId($siswa->id)
+                        ->whereStatusKehadiran('Hadir')->count();
+                        $tidakHadir = App\Absensi_detail::whereJadwalMapelId($jadwal_mapel->id)->whereSiswaId($siswa->id)
+                        ->whereStatusKehadiran('Tidak Hadir')->count();
+                        $izin = App\Absensi_detail::whereJadwalMapelId($jadwal_mapel->id)->whereSiswaId($siswa->id)
+                        ->whereStatusKehadiran('Izin')->count();
+                        $sakit = App\Absensi_detail::whereJadwalMapelId($jadwal_mapel->id)->whereSiswaId($siswa->id)
+                        ->whereStatusKehadiran('Sakit')->count();
+                    @endphp
+                    @if ($hadir !== 0)
+                    <td style="border: 1px solid black">{{$hadir}}</td>
+                    @else
+                        <td style="border: 1px solid black">-</td>
+                    @endif
+                    @if ($tidakHadir !== 0)
+                        <td style="border: 1px solid black">{{$tidakHadir}}</td>
+                    @else
+                        <td style="border: 1px solid black">-</td>
+                    @endif
+                    @if ($izin !== 0)
+                        <td style="border: 1px solid black">{{$izin}}</td>
+                    @else
+                        <td style="border: 1px solid black">-</td>
+                    @endif
+                    @if ($sakit !== 0)
+                        <td style="border: 1px solid black">{{$sakit}}</td>
+                    @else
+                        <td style="border: 1px solid black">-</td>
                     @endif
                 </tr>
                 @endforeach

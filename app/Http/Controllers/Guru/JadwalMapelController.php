@@ -30,11 +30,11 @@ class JadwalMapelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $kelass = Kelas::get();
         $mapels = Mapel::get();
 
-        return view('guru.jadwalMapel.index',compact('kelass','mapels'));
+        return view('guru.jadwalMapel.index', compact('kelass', 'mapels'));
     }
 
     /**
@@ -55,7 +55,7 @@ class JadwalMapelController extends Controller
      */
     public function store(Request $request)
     {
-        $pesanErorr =[
+        $pesanErorr = [
             'required' => ':attribute harus di isi.',
             'string' => ':attribute hanya menggunakan huruf.',
             'integer' => ':attribute hanya menggunakan angka.',
@@ -63,21 +63,21 @@ class JadwalMapelController extends Controller
             'max' => ':attribute maksimal :max karakter.',
             'unique' => ':attribute sudah digunakan.'
         ];
-        $this->validate($request,[
+        $this->validate($request, [
             // |string|max:255|unique:users,email
             'kelas' => 'required',
             'mapel' => 'required',
             'jam' => 'required|string|min:4|max:5',
             'TA' => 'required|string|min:9|max:9',
-        ],$pesanErorr);
+        ], $pesanErorr);
 
         $data = new Jadwal_mapel;
-        $data ->kelas_id = $request->kelas;
-        $data ->mapel_id = $request->mapel;
-        $data ->guru_id = Auth::guard('guru')->user()->id;
-        $data ->jam = $request->jam;
-        $data ->hari = $request->hari;
-        $data ->tahun_ajar = $request->TA;
+        $data->kelas_id = $request->kelas;
+        $data->mapel_id = $request->mapel;
+        $data->guru_id = Auth::guard('guru')->user()->id;
+        $data->jam = $request->jam;
+        $data->hari = $request->hari;
+        $data->tahun_ajar = $request->TA;
         $data->save();
 
         return response()->json([
@@ -118,11 +118,11 @@ class JadwalMapelController extends Controller
     public function update(Request $request, $id)
     {
         $data = Jadwal_mapel::find($id);
-        $data ->kelas_id = $request->kelas_edit;
-        $data ->mapel_id = $request->mapel_edit;
-        $data ->jam = $request->jam_edit;
-        $data ->hari = $request->hari_edit;
-        $data ->tahun_ajar = $request->TA_edit;
+        $data->kelas_id = $request->kelas_edit;
+        $data->mapel_id = $request->mapel_edit;
+        $data->jam = $request->jam_edit;
+        $data->hari = $request->hari_edit;
+        $data->tahun_ajar = $request->TA_edit;
         $data->update();
 
         return response()->json([
@@ -146,25 +146,25 @@ class JadwalMapelController extends Controller
     }
 
     public function apiJadwalMapel()
-    {   
-        $data = Jadwal_mapel::with('kelas')->with('mapel')->with('guru');
+    {
+        $data = Jadwal_mapel::with('kelas')->with('mapel')->with('guru')
+            ->whereGuruId(Auth::guard('guru')->user()->id);
 
         return DataTables::of($data)
-        ->editColumn('kelas', function( $data) {
-            return $data->kelas->kelas;
-        })
-        ->editColumn('mapel', function( $data) {
-            return $data->mapel->nama_mapel;
-        })
-        ->addColumn('action', function($data){
-        return '<a onClick="editForm('.$data->id.')" class="btn btn-primary btn-sm" >
+            ->editColumn('kelas', function ($data) {
+                return $data->kelas->kelas;
+            })
+            ->editColumn('mapel', function ($data) {
+                return $data->mapel->nama_mapel;
+            })
+            ->addColumn('action', function ($data) {
+                return '<a onClick="editForm(' . $data->id . ')" class="btn btn-primary btn-sm" >
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> ' .
-                '<a onClick="deleteForm('.$data->id.')" class="btn btn-danger btn-sm" >
-                        <i class="fa fa-trash-o" aria-hidden="true">&nbsp;  </i></a>';    
-                })
-        ->rawColumns(['action'])
-        ->addIndexColumn()
-        ->make(true);
-    
+                    '<a onClick="deleteForm(' . $data->id . ')" class="btn btn-danger btn-sm" >
+                        <i class="fa fa-trash-o" aria-hidden="true">&nbsp;  </i></a>';
+            })
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
     }
 }

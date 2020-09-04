@@ -44,7 +44,7 @@
 				<img src="http://placehold.it/50/30a5ff/fff" class="img-responsive" alt="">
 			</div>
 			<div class="profile-usertitle">
-                <div class="profile-usertitle-name">{{auth::guard('guru')->user()->nama}}</div>
+                <div class="profile-usertitle-name">{{Auth::guard('guru')->user()->nama}}</div>
 				<div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>
 			</div>
 			<div class="clear"></div>
@@ -54,7 +54,15 @@
 			<li><a href="#"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
 			<li><a href="{{url('guru/jadwal-mapel')}}"><em class="fa fa-file-o">&nbsp;</em> Jadwal Mengajar</a></li>
 			<li><a href="{{url('guru/absensi')}}"><em class="fa fa-users">&nbsp;</em> Absensi</a></li>
-			<li><a href="{{url('guru/lapopran-absensi')}}"><em class="fa fa-file">&nbsp;</em> Laporan Absensi</a></li>
+            <li class="parent "><a data-toggle="collapse" href="#sub-item-1" class="collapsed" aria-expanded="false">
+				<em class="fa fa-navicon">&nbsp;</em> Laporan Anbsensi <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right collapsed" aria-expanded="false"><em class="fa fa-plus"></em></span>
+				</a>
+				<ul class="children collapse" id="sub-item-1" aria-expanded="false" style="height: 0px;">
+                    <li><a href="{{route('guru.lap.permapel')}}">
+                        <em class="fa fa-file">&nbsp;</em> Laporan
+                    </a></li>
+				</ul>
+			</li>
 			<li><a href="{{url('guru/logout')}}"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
 	</div>

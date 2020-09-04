@@ -102,7 +102,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Guru::class,
         ],
-        'siswa' => [
+        'siswas' => [
             'driver' => 'eloquent',
             'model' => App\Siswa::class,
         ],

@@ -35,9 +35,12 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $this->validate($request,
-            ['email'=> 'required|email',
-            'password'=> 'required|min:6',]
+        $this->validate(
+            $request,
+            [
+                'email' => 'required|email',
+                'password' => 'required|min:6',
+            ]
         );
 
         $credential = [
@@ -45,11 +48,11 @@ class LoginController extends Controller
             'password' => $request->password
         ];
 
-        if(Auth::guard('admin')->attempt($credential,$request->member)){
-            return redirect()->intended(route('admin.beranda'));
+        if (Auth::guard('admin')->attempt($credential, $request->member)) {
+            return redirect()->intended(url('admin'));
         }
 
-        return redirect()->back()->withInput($request->only('email','remember'));
+        return redirect()->back()->withInput($request->only('email', 'remember'));
     }
 
     public function logout()

@@ -14,15 +14,15 @@
     <div class="col-lg-10">
         <h1 class="page-header">Absensi</h1>
     </div>
-    
+
 </div>
 <!--/.row-->
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default table-responsive">
-            <div class="panel-heading"> Kelola Absensi
+            <div class="panel-heading">Absensi
                 <div class="pull-right">
-                    <a onClick="addForm()" type="button" class="btn btn-primary btn-sm">Tambah Pertemuan</a>           
+                    <a onClick="addForm()" type="button" class="btn btn-primary btn-sm">Tambah Pertemuan</a>
                 </div>
             </div>
             <br>
@@ -52,7 +52,7 @@
                     <td style="width: 6rem">{{$jadwal_mapels->jam}} WIB</td>
                 </tr>
             </table>
-            
+
             <div class="panel-body">
                 <div class="col-md-12">
                     <table id="table-absensi" class="table table-bordered table-striped dataTable table-responsive" role="grid" aria-describedby="example1_info" style="width: 100%">
@@ -62,7 +62,7 @@
                                 <th class="text-center">Tanggal</th>
                                 <th class="text-center">Action</th>
                             </tr>
-                        </thead> 
+                        </thead>
                         <tbody>
                         @foreach ($absensis as $absen)
                             <tr>
@@ -95,11 +95,11 @@
     function addForm(){
         save_method = "add";
         $('input[name =_method]').val('POST');
-        $('#modal-add').modal('show');  
-        $('.modal-judul').text('Tambah Pertemuan'); 
-        $('#modal-add form')[0].reset(); 
+        $('#modal-add').modal('show');
+        $('.modal-judul').text('Tambah Pertemuan');
+        $('#modal-add form')[0].reset();
         }
-    
+
     $('#simpan').click(function(event){
         event.preventDefault();
 
@@ -127,7 +127,7 @@
             },
             error : function(xhr){
                 var res = xhr.responseJSON;
-                
+
                 if ($.isEmptyObject(res) == false){
                     $.each(res.errors, function (key, value) {
                     $('#' + key)
@@ -136,13 +136,13 @@
                         .append('<span class="help-block"><strong>' + value + '</strong></span>');
                 });
                 }
-                
+
             }
         })
     });
 
     //Date picker
-    var dateToday = new Date(); 
+    var dateToday = new Date();
     $('#datepicker').datepicker({
         autoclose: true,
         format: "dd-mm-yyyy",
@@ -179,7 +179,7 @@
             cancelButtonColor: '#d33',
             confirmButtonColor: '#3085d6',
             confirmButtonText: 'Mulai',
-            
+
         }).then(function(){
             $.ajax({
             url : "{{url ('guru/absensi-detail')}}"+'/'+id,
@@ -192,7 +192,7 @@
                 text: 'Siswa Sudah Bisa Memulai Pengisian Absen !',
                 type: 'success',
                 timer: '3000'
-                }) 
+                })
             },
             error : function (){
                 location.reload()
@@ -218,7 +218,7 @@
             cancelButtonColor: '#d33',
             confirmButtonColor: '#3085d6',
             confirmButtonText: 'Selesai',
-            
+
         }).then(function(){
             $.ajax({
             url : "{{url ('guru/absensi-detail/selesai')}}"+'/'+id,
@@ -231,7 +231,7 @@
                 text: 'Pengisian Absensi Telah Berakhir !',
                 type: 'success',
                 timer: '3000'
-                }) 
+                })
             },
             error : function (){
             swal({
