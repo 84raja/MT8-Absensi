@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('/');
 
 Auth::routes();
 
@@ -66,6 +66,9 @@ Route::group(['prefix' => 'admin'], function () {
     ]);
     // laporan absensi
     Route::get('/laporan-list', 'Admin\LaporanController@index')->name('admin.laporan');
+    Route::get('/print-mapel/{jadwalId}', 'Admin\LaporanController@printPerMapel');
+    Route::get('/list-siswa/{jadwalId}/{kelasId}', 'Admin\LaporanController@listSiswa');
+    Route::get('/print-persiswa/{jadwalId}/{siswaId}', 'Admin\LaporanController@printPerSiswa');
 });
 
 Route::group(['prefix' => 'guru'], function () {

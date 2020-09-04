@@ -45,10 +45,10 @@
                             <td>{{$jadwal->mapel->nama_mapel}}</td>
                             <td>{{$jadwal->guru->nama}}</td>
                         <td>
-                            <a class="btn btn-primary btn-sm" href="{{url('admin/laporan-mapel')}}/{{$jadwal->id}}">
+                            <a class="btn btn-primary btn-sm" href="{{url('admin/print-mapel')}}/{{$jadwal->id}}">
                                 <i class="fa fa-eye"> Lihat Absensi</i>
                             </a>
-                            <a class="btn btn-primary btn-sm" href="{{url('guru/lihat-lap-persiswa')}}/{{$jadwal->kelas_id}}/{{$jadwal->id}}">
+                            <a class="btn btn-primary btn-sm" href="{{url('admin/list-siswa')}}/{{$jadwal->kelas_id}}/{{$jadwal->id}}">
                                 <i class="fa fa-eye"> Lihat Siswa</i>
                             </a>
                         </td>
