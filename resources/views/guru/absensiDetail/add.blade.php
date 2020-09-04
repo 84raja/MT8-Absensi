@@ -1,7 +1,7 @@
 <div class="modal fade" id="modal-add">
     <div class="modal-dialog" >
         <div class="modal-content">
-        
+
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span></button>
@@ -10,7 +10,7 @@
             <div class="modal-body" id="modal-body" style="padding-left: 5%; padding-right: 5%" >
                 <form method="POST" action="{{url('guru/absensi-detail')}}" class="form-horizontal" data-toggle="validator">
                     {{csrf_field()}} {{method_field('POST')}}
-                    
+
                     <input type="hidden" name="jadwal_mapel_id" value="{{$jadwal_mapels->id}}" >
                     <input type="hidden" name="kelas_id" value="{{$jadwal_mapels->kelas->id}}" >
                     <input type="hidden" name="guru_id" value="{{$jadwal_mapels->guru->id}}" >
@@ -35,7 +35,7 @@
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                 <button type="button" id="simpan" class="btn btn-primary">Simpan</button>
             </div>
-        
+
     </div>
         <!-- /.modal-content -->
     </div>

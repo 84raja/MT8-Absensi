@@ -17,6 +17,7 @@ use App\Guru;
 use App\Mapel;
 use App\Absensi;
 use App\Absensi_detail;
+
 class AbsensiDetailController extends Controller
 {
     /**
@@ -35,7 +36,6 @@ class AbsensiDetailController extends Controller
      */
     public function index()
     {
-        
     }
 
     /**
@@ -56,7 +56,7 @@ class AbsensiDetailController extends Controller
      */
     public function store(Request $request)
     {
-        $pesanErorr =[
+        $pesanErorr = [
             'required' => ':attribute harus di isi.',
             'string' => ':attribute hanya menggunakan huruf.',
             'integer' => ':attribute hanya menggunakan angka.',
@@ -64,50 +64,48 @@ class AbsensiDetailController extends Controller
             'max' => ':attribute maksimal :max karakter.',
             'unique' => ':attribute sudah digunakan.'
         ];
-        $this->validate($request,[
+        $this->validate($request, [
             // |string|max:255|unique:users,email
             'pertemuan' => 'required|integer|max:30',
             'tanggal' => 'required',
-        ],$pesanErorr);
+        ], $pesanErorr);
 
         $siswas = Siswa::whereKelas_id($request->kelas_id)->get();
-        if($siswas->isEmpty()){
-            Alert::error('Tidak ada siswa dalam kelas','Daftarkan siswa ke kelas terlebih dulu');
+        if ($siswas->isEmpty()) {
+            Alert::error('Tidak ada siswa dalam kelas', 'Daftarkan siswa ke kelas terlebih dulu');
             return back();
-        }else{
-        $data = new Absensi;
-        $data ->pertemuan = $request->pertemuan;
-        $data ->tanggal = $request->tanggal;
-        $data ->jadwal_mapel_id = $request->jadwal_mapel_id;
-        $data ->guru_id = $request->guru_id;
-        $data ->kelas_id = $request->kelas_id;
-        $data ->mapel_id = $request->mapel_id;
-        $data ->status = 'off';
-        $data->save();
+        } else {
+            $data = new Absensi;
+            $data->pertemuan = $request->pertemuan;
+            $data->tanggal = $request->tanggal;
+            $data->jadwal_mapel_id = $request->jadwal_mapel_id;
+            $data->guru_id = $request->guru_id;
+            $data->kelas_id = $request->kelas_id;
+            $data->mapel_id = $request->mapel_id;
+            $data->status = 'off';
+            $data->save();
 
-        
-        foreach ($siswas as $siswa) {
 
-            $dataAbsenDetail[] = array(
-                
-                'siswa_id'   => $siswa->id,
-                'absensi_id'   => $data->id,
-                'jadwal_mapel_id' => $data->jadwal_mapel_id,
-                'status_kehadiran'   => '-',
-                'ket'    => null,
+            foreach ($siswas as $siswa) {
 
-                
-            );
+                $dataAbsenDetail[] = array(
+
+                    'siswa_id'   => $siswa->id,
+                    'absensi_id'   => $data->id,
+                    'jadwal_mapel_id' => $data->jadwal_mapel_id,
+                    'status_kehadiran'   => '-',
+                    'ket'    => null,
+
+
+                );
+            }
+            Absensi_detail::insert($dataAbsenDetail);
         }
-        Absensi_detail::insert($dataAbsenDetail);
-    }
 
 
         return response()->json([
             'success' => true
         ]);
-        
-        
     }
 
     /**
@@ -121,7 +119,7 @@ class AbsensiDetailController extends Controller
 
         $jadwal_mapels = Jadwal_mapel::find($id);
         $absensis = Absensi::whereJadwal_mapel_id($id)->get();
-        return view('guru.absensiDetail.index',compact('jadwal_mapels','absensis'));
+        return view('guru.absensiDetail.index', compact('jadwal_mapels', 'absensis'));
     }
 
     /**
@@ -152,11 +150,11 @@ class AbsensiDetailController extends Controller
         foreach ($absensis as $absensi) {
 
             $dataAbsenDetail[] = array(
-                
+
                 'status_kehadiran'   => 'Tidak Hadir',
                 'ket'    => null,
 
-                
+
             );
         }
         Absensi_detail::insert($dataAbsenDetail);
@@ -171,7 +169,8 @@ class AbsensiDetailController extends Controller
         $mulai->status = 'selesai';
         $mulai->save();
 
-        Absensi_detail::whereAbsensi_id($id)->whereStatus_kehadiran('-')->update(['status_kehadiran'=>'Tidak Hadir']);
+        Absensi_detail::whereAbsensi_id($id)->whereStatus_kehadiran('-')
+            ->update(['status_kehadiran' => 'Tidak Hadir']);
 
         return response()->json([
             'success' => true
@@ -194,7 +193,7 @@ class AbsensiDetailController extends Controller
         $absensi = Absensi::find($id);
         $kehadiran = Absensi_detail::whereAbsensi_id($id)->get();
 
-        return view('guru.absensiDetail.lihatAbsen',compact('absensi','kehadiran'));
+        return view('guru.absensiDetail.lihatAbsen', compact('absensi', 'kehadiran'));
     }
 
     public function print($id)
@@ -202,7 +201,7 @@ class AbsensiDetailController extends Controller
         $absensi = Absensi::find($id);
         $kehadiran = Absensi_detail::whereAbsensi_id($id)->get();
 
-        return PDF::loadView('guru.absensiDetail.print',['absensi'=>$absensi,'kehadiran'=>$kehadiran])->stream();
+        return PDF::loadView('guru.absensiDetail.print', ['absensi' => $absensi, 'kehadiran' => $kehadiran])
+            ->stream();
     }
-
 }

@@ -46,9 +46,10 @@
                             <td>{{$jadwal->kelas->kelas}}</td>
                             <td>{{$jadwal->mapel->nama_mapel}}</td>
                         <td>
-                            <a class="btn btn-primary btn-sm" href="{{url('guru/lihat-lap-persiswa')}}/{{$jadwal->kelas_id}}">
-                                <i class="fa fa-eye"> Lihat Siswa</i>
-                            </a>
+                                <a class="btn btn-primary btn-sm" href="{{url('guru/lihat-lap-persiswa')}}/{{$jadwal->kelas_id}}">
+                                    <i class="fa fa-eye"> Lihat Siswa</i>
+                                </a>
+
                         </td>
                         </tr>
                     @endforeach

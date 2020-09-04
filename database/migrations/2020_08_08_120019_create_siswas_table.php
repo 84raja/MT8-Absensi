@@ -17,11 +17,15 @@ class CreateSiswasTable extends Migration
             $table->increments('id');
             $table->string('nama');
             $table->string('nisn')->unique();
+            $table->string('foto')->nullable();
             $table->string('email')->unique();
             $table->string('jenis_kelamin');
             $table->string('tempat_lahir');
             $table->string('tgl_lahir');
-            $table->string('kelas');
+            $table->unsignedInteger('kelas_id');
+            $table->foreign('kelas_id')
+                ->references('id')->on('kelas')
+                ->onDelete('cascade');
             $table->string('nama_ibu_kandung');
             $table->string('password');
             $table->rememberToken();

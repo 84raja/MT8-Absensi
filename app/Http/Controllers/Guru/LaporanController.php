@@ -36,7 +36,7 @@ class LaporanController extends Controller
 
         $datas = Absensi_detail::whereJadwalMapelId($mapelid)->get();
         $jadwal_mapel = Jadwal_mapel::find($mapelid);
-        $jumlah_pertemuan = $jadwal_mapel->count();
+        $jumlah_pertemuan = Absensi::whereJadwalMapelId($jadwal_mapel->id)->count();
         $siswas = Siswa::whereKelasId($jadwal_mapel->kelas_id)->get();
         // // dd($siswa_id);
         return PDF::loadView('guru.laporan.printPerMapel', [

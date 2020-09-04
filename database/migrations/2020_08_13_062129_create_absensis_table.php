@@ -15,14 +15,26 @@ class CreateAbsensisTable extends Migration
     {
         Schema::create('absensis', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('kelas_id');
-            $table->integer('mapel_id');
-            $table->integer('guru_id');
-            $table->integer('jadwal_mapel_id');
+            $table->unsignedInteger('kelas_id');
+            $table->foreign('kelas_id')
+                ->references('id')->on('kelas')
+                ->onDelete('cascade');
+            $table->unsignedInteger('mapel_id');
+            $table->foreign('mapel_id')
+                ->references('id')->on('mapels')
+                ->onDelete('cascade');
+            $table->unsignedInteger('guru_id');
+            $table->foreign('guru_id')
+                ->references('id')->on('gurus')
+                ->onDelete('cascade');
+            $table->unsignedInteger('jadwal_mapel_id');
+            $table->foreign('jadwal_mapel_id')
+                ->references('id')->on('jadwal_mapels')
+                ->onDelete('cascade');
             $table->string('pertemuan');
             $table->string('tanggal');
+            $table->string('status');
             $table->timestamps();
-
         });
     }
 
