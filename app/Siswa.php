@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\App;
+
 
 class Siswa extends Authenticatable
 {
@@ -19,7 +21,8 @@ class Siswa extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nama', 'email','nisn','foto','jenis_kelamin','tempat_lahir','tgl_lahir','kelas_id','nama_ibu_kandung','password',
+        'nama', 'email', 'nisn', 'foto', 'jenis_kelamin', 'tempat_lahir',
+        'tgl_lahir', 'kelas_id', 'nama_ibu_kandung', 'password',
     ];
 
     /**
@@ -40,12 +43,12 @@ class Siswa extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function absensi_detail() 
+    public function absensi_detail()
     {
-        return $this->hasMany('App\Absensi_detail','siswa_id', 'id');
+        return $this->hasMany('App\Absensi_detail', 'siswa_id', 'id');
     }
     public function kelas()
-	{
-        return $this->belongsTo('App\Kelas','kelas_id', 'id');
+    {
+        return $this->belongsTo(Kelas::class);
     }
 }

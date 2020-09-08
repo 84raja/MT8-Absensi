@@ -153,12 +153,9 @@ class AbsensiDetailController extends Controller
 
                 'status_kehadiran'   => 'Tidak Hadir',
                 'ket'    => null,
-
-
             );
         }
         Absensi_detail::insert($dataAbsenDetail);
-
         return response()->json([
             'success' => true
         ]);

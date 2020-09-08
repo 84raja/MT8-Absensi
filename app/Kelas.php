@@ -11,24 +11,19 @@ class Kelas extends Model
      *
      * @var array
      */
-    protected $table = "kelas";
 
-    protected $fillable = [
-        'kelas'
-    ];
 
-    public function jadwal() 
+    public function jadwal()
     {
-        return $this->hasMany('App\Jadwal_mapel','kelas_id', 'id');
-    }
-    
-    public function absensi() 
-    {
-        return $this->hasMany('App\Absensi','kelas_id', 'id');
-    }
-    public function Siswa() 
-    {
-        return $this->hasMany('App\Siswa','kelas_id', 'id');
+        return $this->hasMany('App\Jadwal_mapel', 'kelas_id', 'id');
     }
 
+    public function absensi()
+    {
+        return $this->hasMany('App\Absensi', 'kelas_id', 'id');
+    }
+    public function siswa()
+    {
+        return $this->hasMany(Siswa::class);
+    }
 }
