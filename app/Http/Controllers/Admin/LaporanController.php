@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Absensi;
 use PDF;
 
 use App\Absensi_detail;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Model;
 use App\Jadwal_mapel;
+use App\Mapel;
 use App\Siswa;
 
 class LaporanController extends Controller
@@ -30,7 +32,7 @@ class LaporanController extends Controller
 
         $datas = Absensi_detail::whereJadwalMapelId($mapelid)->get();
         $jadwal_mapel = Jadwal_mapel::find($mapelid);
-        $jumlah_pertemuan = $jadwal_mapel->count();
+        $jumlah_pertemuan = Absensi::whereJadwalMapelId($jadwal_mapel->id)->count();
         $siswas = Siswa::whereKelasId($jadwal_mapel->kelas_id)->get();
         // // dd($siswa_id);
         return PDF::loadView('admin.laporan.printPerMapel', [
